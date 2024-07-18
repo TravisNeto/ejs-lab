@@ -51,28 +51,23 @@ const RESTAURANT = {
 
 app.get('/', (req, res) => {
   res.render('home.ejs', {
-    restaurant: RESTAURANT,
+    RESTAURANT: RESTAURANT,
     pageTitle: RESTAURANT.name
   });
 });
 
 app.get('/menu', (req, res) => {
-    res.render('menu.ejs')
+    res.render('menu.ejs'), {RESTAURANT, menu: RESTAURANT.menu}
 })
 
 app.get('/menu/:category', (req, res) => {
     const category = req.params.category
-    const categoryMenu = menu[category]
-    res.render('category.ejs')
+    const menuItems = RESTAURANT.menu.filter(item.category === category)
+    res.render('category.ejs', {RESTAURANT: RESTAURANT,
+    category: category,
+    menuItems: menuItems
+  })   
 })
-
-
-
-  
-
-
-
-
 
 
 app.listen(3000);
